@@ -101,7 +101,11 @@ public class Metric implements Serializable
         value_ = value;
     }
     
-    
+    @Override
+    public String toString()
+    {
+    	return value_.toString();
+    }
     
 
 }

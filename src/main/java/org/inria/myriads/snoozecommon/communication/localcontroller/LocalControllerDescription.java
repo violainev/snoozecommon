@@ -21,6 +21,7 @@ package org.inria.myriads.snoozecommon.communication.localcontroller;
 
 import java.io.Serializable;
 import java.net.InetAddress;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +76,12 @@ public final class LocalControllerDescription
     /** Metrics. */
     private Map<String, LRUCache<Long,Metric>> metricData_; 
     
+    /** State */
+    private LocalControllerState state_;
+    
+    /** Timestamp of the last time the LC was ACTIVE (before shutdown) **/
+   // private long lastTimeShutdown_; // = new Timestamp(System.currentTimeMillis()).getTime(); 
+    
     /**
      * Constructor.
      */
@@ -89,6 +96,8 @@ public final class LocalControllerDescription
         totalCapacity_ = new ArrayList<Double>();
         hostname_ = initializeHostname();
         metricData_ = new HashMap<String, LRUCache<Long,Metric>>();
+        state_ = LocalControllerState.NULL;
+    //    lastTimeShutdown_ = -1;
     }
     
    
@@ -112,6 +121,8 @@ public final class LocalControllerDescription
         totalCapacity_ = new ArrayList<Double>(original.getTotalCapacity());
         hostname_ = original.getHostname();
         metricData_ = original.getMetricData();
+        state_ = original.getState();
+    //    lastTimeShutdown_ = -1;
         
     }
     
@@ -317,7 +328,6 @@ public final class LocalControllerDescription
         assignedVirtualMachines_ = assignedVirtualMachines;
     }
 
-
     /**
      * @return the hostname
      */
@@ -335,7 +345,6 @@ public final class LocalControllerDescription
     }
 
 
-
     /**
      * @return the metricData
      */
@@ -343,12 +352,44 @@ public final class LocalControllerDescription
         return metricData_;
     }
 
-
-
     /**
      * @param metricData the metricData to set
      */
     public void setMetricData(Map<String, LRUCache<Long, Metric>> metricData) {
         metricData_ = metricData;
     }
+    
+    
+    /**
+     * Sets the state.
+     * 
+     * @param localControllerState    The state
+     */
+    public void setState(LocalControllerState localControllerState) 
+    {
+        state_ = localControllerState;
+    }
+    
+    /**
+     * Returns the state.
+     * 
+     * @return  The state
+     */
+    public LocalControllerState getState() 
+    {
+        return state_;
+    }
+    
+ /*   
+    public long getLastTimeShutdown()
+    {
+    	return lastTimeShutdown_;
+    }
+
+	public void setLastTimeShutdown()
+	{
+		lastTimeShutdown_ = new Timestamp(System.currentTimeMillis()).getTime();
+	}
+
+*/
 }
