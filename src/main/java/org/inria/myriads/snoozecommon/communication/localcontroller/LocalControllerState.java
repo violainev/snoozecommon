@@ -37,5 +37,5 @@ public enum LocalControllerState
     /** Unstable (extra metrics). */
     UNSTABLE,
     /** Overheated */
-    OVERHEATED,
+    OVERHEATED
 }
